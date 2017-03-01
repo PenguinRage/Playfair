@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Playfair {
 
     private char[][] grid;
-    String key;
+
 
     public Playfair(String key) {
 
@@ -47,9 +47,30 @@ public class Playfair {
             single[count++] = val;
 
         }
+        // If key isn't valid within the parameters A-Z simply make grid alphabetical
+        if (count == 0) {
+            single[count++] = 'A';
+            done[0] = true;
+        }
 
+        // fill the remainder of the array with non duplicates
+        for (char c = 'A'; c <= 'Z'; c++) {
+            // ignore J
+            if (c == 'J')
+                continue;
+            //test if already used in given password
+            if (done[c - 'A'])
+                continue;
+            // else add it in
+            single[count++] = c;
+        }
 
+        // Now add the items to our grid
+        int idx = 0;
 
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 5; j++)
+                grid[i][j] = single[idx++];
 
     }
 
