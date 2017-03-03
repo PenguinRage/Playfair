@@ -1,10 +1,13 @@
+import jdk.internal.util.xml.impl.Pair;
+
 import java.awt.*;
 
 /**
  * Created by penguinrage on 2/03/17.
  */
 public class LetterPair {
-
+    // grid length
+    int n = 5;
     // the first letter
     public char left;
 
@@ -29,8 +32,8 @@ public class LetterPair {
 
     public Point findPos(char[][] grid, char c) {
         // scan the grid for letter
-        for(int i = 0; i < 5; i++)
-            for(int j = 0; j<5; j++) {
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j<n; j++) {
                 if (grid[i][j] == c)
                     return new Point(i,j);
             }
@@ -55,13 +58,52 @@ public class LetterPair {
 
     }
 
+    // Switch columns
+    private void diffRowCol() {
+        int temp = pRight.y;
+        pRight.y =  pLeft.y;
+        pLeft.y = temp;
+    }
+
     private void sameColumn() {
-
+        if (code_type) {
+            // to the right
+            pLeft.x++;
+            pRight.x++;
+            // contain within grid borders
+            pRight.x %= n;
+            pLeft.x %= n;
+        } else {
+            // to the left
+            pLeft.x--;
+            pRight.x--;
+            if (pLeft.x < 0) pLeft.x = 4;
+            if (pRight.x < 0) pRight.x = 4;
+        }
     }
 
+    /*
+     * Encoding to the Right
+     * Decoding to the Left
+     */
     private void sameRow() {
-
+        if (code_type) {
+            // to the right
+            pLeft.y++;
+            pRight.y++;
+            // contain within grid borders
+            pRight.y %= n;
+            pLeft.y %= n;
+        } else {
+            // to the left
+            pLeft.y--;
+            pRight.y--;
+            if (pLeft.y < 0) pLeft.y = 4;
+            if (pRight.y < 0) pRight.y = 4;
+        }
     }
 
-
+    public String getPair() {
+        return new String(swap);
+    }
 }

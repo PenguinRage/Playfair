@@ -135,5 +135,19 @@ public class Playfair {
 
     }
 
+    private String list_To_String(ArrayList<LetterPair> swapList) {
+        if (swapList.size() == 0) return "";
+
+        // String builder puts the elements together
+        StringBuilder sb = new StringBuilder();
+
+        // put the first element
+        for (int i = 0; i < swapList.size(); i++)
+            sb.append(swapList.get(i).getPair());
+
+        return sb.toString();
+
+    }
+
 
 }
