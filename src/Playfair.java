@@ -2,7 +2,6 @@
  * Created by penguinrage on 27/02/17.
  */
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -173,7 +172,7 @@ public class Playfair {
     }
 
 
-    @NotNull
+
     private String list_To_String(ArrayList<LetterPair> swapList) {
         if (swapList.size() == 0) return "";
 
