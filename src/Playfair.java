@@ -2,22 +2,24 @@
  * Created by penguinrage on 27/02/17.
  */
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 
 public class Playfair {
 
-    public char[][] grid;
+    private char[][] grid;
 
 
-    public Playfair(String key) {
+    Playfair(String key) {
 
         // Grid for encrypt and decryption purposes
         grid = new char[5][5];
         setKey(key);
     }
 
-    public void setKey(String key) {
+    private void setKey(String key) {
         if (key == null)
             key = "A";
         else
@@ -78,7 +80,7 @@ public class Playfair {
     public void showGrid() {
         for (char[] row : grid) {
             for (char c : row)
-                System.out.println(" " + c + " ");
+                System.out.print(" " + c + " ");
             System.out.println();
         }
     }
@@ -90,7 +92,7 @@ public class Playfair {
             return "";
 
         // convert text into uppercase
-        char[] new_text = text.toUpperCase().toCharArray();
+        char[] text_array = text.toUpperCase().toCharArray();
 
         // create an ArrayList to store the pairs of letters
         int idx = 0;
@@ -99,29 +101,29 @@ public class Playfair {
 
         LetterPair pairs = null;
 
-        while (i < new_text.length)
+        while (i < text_array.length)
         {
             // check that char is within parameters
-            if (new_text[i] < 'A' || new_text[idx] > 'Z') {
+            if (text_array[i] < 'A' || text_array[idx] > 'Z') {
                 i++;
                 continue;
             }
 
-            if (new_text[i] == 'J')
-                new_text[i] = 'I';
+            if (text_array[i] == 'J')
+                text_array[i] = 'I';
 
             if (idx == 0) {
-                pairs = new LetterPair(grid, new_text[i++], true);
+                pairs = new LetterPair(grid, text_array[i++], true);
                 swapList.add(pairs);
                 idx = 1;
                 continue;
             }
 
-            if (pairs.left == new_text[i]) {
+            if (pairs.left == text_array[i]) {
                 pairs.setRight(grid, 'X');
             }
             else {
-                pairs.setRight(grid, new_text[i++]);
+                pairs.setRight(grid, text_array[i++]);
             }
 
             // next pair so index returns to 0
@@ -135,6 +137,41 @@ public class Playfair {
 
     }
 
+    public String decode(String cipher_text) {
+        if (cipher_text == null) return "";
+
+        char[] text_array = cipher_text.toUpperCase().toCharArray();
+
+        StringBuilder sb = new StringBuilder(text_array.length);
+
+        for (int i = 0; i < text_array.length; i++) {
+            if (text_array[i] < 'A' || text_array[i] > 'Z')
+                continue;
+            if (text_array[i] == 'J')
+                text_array[i] = 'I';
+            sb.append(text_array[i]);
+        }
+
+        if (sb.length() % 2 != 0)
+            return "Stringbuilder Message must be even to properly decode";
+
+        ArrayList<LetterPair>  pairList = new ArrayList<LetterPair>();
+        text_array = sb.toString().toCharArray();
+
+        for (int i = 0; i < sb.length(); i+=2) {
+            //create a decoding pair
+            LetterPair pair = new LetterPair(grid, text_array[i], false);
+            pair.setRight(grid, text_array[i+1]);
+            pairList.add(pair);
+        }
+
+        // return message in lower case
+        return list_To_String(pairList).toLowerCase();
+
+    }
+
+
+    @NotNull
     private String list_To_String(ArrayList<LetterPair> swapList) {
         if (swapList.size() == 0) return "";
 

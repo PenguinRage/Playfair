@@ -6,7 +6,8 @@ import static org.junit.Assert.*;
 public class PlayfairTest {
     @org.junit.Test
     public void showGrid() throws Exception {
-
+        Playfair pf = new Playfair("DREAMINCODE");
+        pf.showGrid();
     }
 
     @org.junit.Test
