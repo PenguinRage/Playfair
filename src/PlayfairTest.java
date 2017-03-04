@@ -19,9 +19,17 @@ public class PlayfairTest {
     @org.junit.Test
     public void encode() throws Exception {
         Playfair pf = new Playfair("PLAYFAIR EXAMPLE");
-        String encryption_txt = pf.encode("Hello Friend");
+        String encryption_txt = pf.encode("Hell my Friend");
         System.out.println(encryption_txt);
 
     }
 
+    @org.junit.Test
+    public void decode() throws Exception {
+        Playfair pf = new Playfair("PLAYFAIR EXAMPLE");
+        String encryption_txt = pf.encode("My Friend");
+        String decrypted_txt = pf.decode(encryption_txt);
+        System.out.println(decrypted_txt);
+
+    }
 }
