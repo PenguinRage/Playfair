@@ -75,7 +75,9 @@ public class Playfair {
                 grid[i][j] = cipher_key[idx++];
 
     }
-
+    public char[][] getGrid() {
+        return grid;
+    }
     // print grid
     public void showGrid() {
         for (char[] row : grid) {
